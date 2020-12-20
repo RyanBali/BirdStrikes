@@ -14,7 +14,7 @@ with open('incidents', 'r') as f:
 with open('years', 'r') as f:
     lines = f.readlines()
     predictionyears = [int(line.split()[0]) for line in lines]
-	
+
 # Convert Dims
 X = np.array(incidentyear).reshape((-1, 1))
 Y = np.array(incidentcount).reshape((-1, 1))
@@ -24,15 +24,8 @@ model = LinearRegression().fit(X,Y)
 
 # Retrieve predicted model parameters
 r_sq = model.score(X,Y)
-
-# Print model parameters
-print()
-print('coefficient of determination -> ', r_sq)
 intercept = model.intercept_
-print('intercept -> ', intercept)
 slope =  model.coef_
-print('slope -> ', slope)
-print()
 
 # Plot the data 
 plt.scatter(incidentyear, incidentcount, marker='D')
@@ -53,13 +46,19 @@ plt.title('Actual and Predicted Incidents of Aircraft Damage \n from 2010 to 202
 ax = plt.subplot(111)
 for s in ['top', 'right']: 
     ax.spines[s].set_visible(False)
-	
+
 # Put the legend
 font = font_manager.FontProperties(family='DejaVu Sans', size=10)
 rect1 = Line2D([], [], marker="D", markersize=10, linewidth=0, color=(0, 0.3, 0.8, 0.8))
 rect2 = Line2D([], [], marker="_", markersize=30, linewidth=0, color="black")
-ax.legend((rect1, rect2), ('Actual', 'Predicted'), 
-          loc='center right', frameon=False, prop=font, bbox_to_anchor=(1.4, 0.4), handletextpad=2, labelspacing=1.5)
-		  
+
 #show graph
+print()
 plt.show()
+
+# Print model parameters
+print('Model Parameters : ')
+print('    coefficient of determination -> ', r_sq)
+print('    intercept -> ', intercept)
+print('    slope -> ', slope)
+print()
